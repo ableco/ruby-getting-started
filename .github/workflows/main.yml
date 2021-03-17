@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       LOADMILL_API_TOKEN: ${{ secrets.LOADMILL_API_TOKEN }}
+      ACTIONS_RUNNER_DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
 
     steps:
       - name: Checkout code
