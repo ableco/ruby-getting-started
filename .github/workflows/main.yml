@@ -28,3 +28,12 @@ jobs:
           echo "::set-output name=configJson::$content"
       - run: |
           echo "${{ steps.set_var.outputs.configJson }}"
+      - name: Make Request
+        id: myRequest
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: "https://www.loadmill.com/api/v1/tests"
+          method: 'POST'
+          data: ${{ steps.myRequest.outputs.response }}
+      - name: Show Response
+        run: echo ${{ steps.myRequest.outputs.response }}

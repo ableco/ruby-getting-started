@@ -8,7 +8,7 @@
             "headers": [],
             "assert": [],
             "timeout": 60000,
-            "description": "🚪 Login"
+            "description": "Test"
         }
     ],
     "meta": {
