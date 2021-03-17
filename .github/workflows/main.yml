@@ -36,6 +36,28 @@ jobs:
           url: "https://www.loadmill.com/api/v1/tests"
           method: 'POST'
           bearerToken: ${{ secrets.LOADMILL_API_TOKEN }}
-          data: ${{ steps.myRequest.outputs.response }}
+          data: |
+            {
+              "duration": 60000,
+              "concurrency": 5,
+              "requests": [
+                  {
+                      "url": "https://loadmill-testing.herokuapp.com/",
+                      "method": "GET",
+                      "headers": [],
+                      "assert": [],
+                      "timeout": 60000,
+                      "description": "Test"
+                  }
+              ],
+              "meta": {
+                  "description": "Load test"
+              },
+              "iterationDelay": 2000,
+              "cachePenetration": {
+                  "mode": "default"
+              },
+              "rampUp": 60000
+            }
       - name: Show Response
         run: echo ${{ steps.myRequest.outputs.response }}
