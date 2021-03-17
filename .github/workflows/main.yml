@@ -29,8 +29,8 @@ jobs:
           echo "::set-output name=configJson::$content"
       - run: |
           echo "${{ steps.set_var.outputs.configJson }}"
-      - name: Make Request
-        id: myRequest
+      - name: Create Load Test
+        id: my_load_test
         uses: fjogeleit/http-request-action@master
         with:
           url: "https://www.loadmill.com/api/v1/tests"
@@ -60,4 +60,13 @@ jobs:
               "rampUp": 60000
             }
       - name: Show Response
-        run: echo ${{ steps.myRequest.outputs.response }}
+        run: echo ${{ steps.my_load_test.outputs.response }}
+      - name: Run Load Test
+        id: my_load_test_run
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: "https://www.loadmill.com/api/v1/tests/${{ steps.my_load_test.outputs.response }}/load"
+          method: 'PUT'
+          bearerToken: ${{ secrets.LOADMILL_API_TOKEN }}
+      - name: Show Response
+        run: echo ${{ steps.my_load_test_run.outputs.response }}
