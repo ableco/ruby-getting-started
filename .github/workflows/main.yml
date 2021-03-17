@@ -3,7 +3,7 @@ name: Loadmill Test
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
@@ -34,6 +34,7 @@ jobs:
         with:
           url: "https://www.loadmill.com/api/v1/tests"
           method: 'POST'
+          bearerToken: ${{ secrets.LOADMILL_API_TOKEN }}
           data: ${{ steps.myRequest.outputs.response }}
       - name: Show Response
         run: echo ${{ steps.myRequest.outputs.response }}
